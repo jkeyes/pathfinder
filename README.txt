@@ -11,7 +11,7 @@ import pathfinder
 # get all directories and sub-directories in current directory
 paths = pathfinder.pathfind(".", just_dirs=True)
 
-# get all directories and sub-directories in current directory
+# get all files in the current directory and all sub-directories
 paths = pathfinder.pathfind(".", just_files=True)
 
 # get all jpg files using a regex
