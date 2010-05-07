@@ -22,7 +22,7 @@
             <p>
                 Pathfinder makes <code>os.walk</code> usable.
             </p>
-            <h2>Examples</h2>
+            <h2>Some examples</h2>
             <pre>
 import pathfinder
 
@@ -44,6 +44,11 @@ png_filter = pathfinder.FnmatchFilter("*.png")
 image_filter = pathfinder.OrFilter(jpg_filter, png_filter)
 paths = pathfinder.pathfind(".", filter=image_filter)
             </pre>
+            <h2>The nuts and bolts</h2>
+            <p>
+                To grab the code, raise an issue or keep track of any updates visit the 
+                <a href="http://github.com/jkeyes/pathfinder">repository</a>.
+            </p>
         </section>
         <footer>
             <section id="still_here">
