@@ -1,5 +1,5 @@
 import os
-from pathfinder import pathfind, AndFilter, DirectoryFilter, DotDirectoryFilter, RegexFilter, OrFilter
+from pathfinder import pathfind, AndFilter, DirectoryFilter, DotDirectoryFilter, FnmatchFilter, RegexFilter, OrFilter, NotFilter
 
 def test_just_dirs():
     basepath = "test/data"
@@ -153,6 +153,18 @@ def test_or():
     assert 'test/data/file2.dat' in paths
     assert 'test/data/dir2/file6.log' in paths
     assert 'test/data/dir2/file7.html' in paths
+
+def test_not():
+    basepath = "test/data"
+
+    f = AndFilter(NotFilter(FnmatchFilter('*3.txt')), FnmatchFilter('*.txt'))
+
+    paths = pathfind(basepath, filter=f)
+
+    assert len(paths) == 2
+
+    assert 'test/data/file1.txt' in paths
+    assert 'test/data/dir1/file4.txt' in paths
 
 def test_ignore():
     basepath = "test/data"
