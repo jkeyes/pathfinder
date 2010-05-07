@@ -1,0 +1,7 @@
+0.2
+  * Added setup.py
+  * Fixed bug in NotFilter
+  * Tided pathfind function.
+
+0.1 
+  * First Cut
