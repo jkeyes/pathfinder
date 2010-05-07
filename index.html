@@ -1,1 +1,62 @@
-Pathfinder project page
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <title>John Keyes</title>
+        <link rel="stylesheet" type="text/css" href="http://keyes.ie/style.css" media="screen"/>
+        <link media="only screen and (max-device-width: 480px)"
+            href="http://keyes.ie/iPhone.css" type="text/css" rel="stylesheet" />
+        <link rel="shortcut icon" href="http://keyes.ie/favicon.jpg"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script src="http://keyes.ie/keyes.js"></script>
+        <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <header>
+            <h1>pathfinder</h1>
+        </header>
+        <section>
+            <p>
+                Pathfinder makes <code>os.walk</code> usable.
+            </p>
+            <h2>Examples</h2>
+            <pre>
+import pathfinder
+
+# get all directories and sub-directories in current directory
+paths = pathfinder.pathfind(".", just_dirs=True)
+
+# get all files in the current directory and all sub-directories
+paths = pathfinder.pathfind(".", just_files=True)
+
+# get all jpg files using a regex
+paths = pathfinder.pathfind(".", regex=".*\.jpg$")
+
+# get all jpg files using posix wildcards
+paths = pathfinder.pathfind(".", fnmatch="*.jpg")
+
+# get all jpg files and png files
+jpg_filter = pathfinder.FnmatchFilter("*.jpg")
+png_filter = pathfinder.FnmatchFilter("*.png")
+image_filter = pathfinder.OrFilter(jpg_filter, png_filter)
+paths = pathfinder.pathfind(".", filter=image_filter)
+            </pre>
+        </section>
+        <footer>
+            <section id="still_here">
+                <p>
+                    Looking for my
+                    <a href="http://john.keyes.ie">blog</a>,   
+                    <a href="http://twitter.com/jkeyes/">tweets</a>, or  
+                    <a href="http://flickr.com/johnkeyes/">photos</a>?
+                </p>
+            </section>
+            <section>
+                <p class="copy">&copy; John Keyes 2010</p>
+            </section>
+        </footer>
+    </body>
+</html>
