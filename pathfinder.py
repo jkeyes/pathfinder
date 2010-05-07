@@ -65,7 +65,7 @@ class NotFilter(object):
         self.pathfilter = pathfilter
 
     def accepts(self, filepath):
-        return not self.pathfilter(filepath)
+        return not self.pathfilter.accepts(filepath)
 
 class DotDirectoryFilter(object):
     def __init__(self):
@@ -107,14 +107,14 @@ def walk_and_filter(filepath, pathfilter, ignore=None, abspath=None):
     
 def pathfind(filepath, just_dirs=None, just_files=None, regex=None, fnmatch=None, filter=None, ignore=None, abspath=None):
     if just_dirs:
-        return walk_and_filter(filepath, DirectoryFilter(), ignore, abspath)
+        filter = DirectoryFilter()
     elif just_files:
-        return walk_and_filter(filepath, FileFilter(), ignore, abspath)
+        filter = FileFilter()
     elif regex:
-        return walk_and_filter(filepath, RegexFilter(regex), ignore, abspath)
+        filter = RegexFilter(regex)
     elif fnmatch:
-        return walk_and_filter(filepath, FnmatchFilter(fnmatch), ignore, abspath)
-    elif filter:
-        return walk_and_filter(filepath, filter, ignore, abspath)
-    else:
-        return walk_and_filter(filepath, AlwaysAcceptFilter(), ignore, abspath)
+        filter = FnmatchFilter(fnmatch)
+    elif not filter:
+        filter = AlwaysAcceptFilter()
+
+    return walk_and_filter(filepath, filter, ignore, abspath)
