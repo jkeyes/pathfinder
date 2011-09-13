@@ -1,3 +1,10 @@
+0.3.1 
+  * Removed hard-coded file separators
+  * Added docstrings and comments
+
+0.3
+  * Added depth parameter to walk_and_filter
+
 0.2
   * Added setup.py
   * Fixed bug in NotFilter

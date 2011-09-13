@@ -5,7 +5,7 @@ setup(name='pathfinder',
     url='http://jkeyes.github.com/pathfinder/',
     author='John Keyes',
     author_email='pathfinder@keyes.ie',
-    version='0.2',
+    version='0.3.1',
     license='BSD',
     classifiers = [
         'Development Status :: 4 - Beta',
