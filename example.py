@@ -1,11 +1,3 @@
-pathfinder
-==========
-
-A utility to find file paths.
-
-Examples
---------
-
 from pathfinder import find
 
 # get all directories and sub-directories in current directory

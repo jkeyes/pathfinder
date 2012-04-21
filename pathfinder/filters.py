@@ -5,28 +5,40 @@ import fnmatch
 import os
 import re
 
-class AlwaysAcceptFilter(object):
+class Filter(object):
+
+    def __and__(self, other):
+        return AndFilter(self, other)
+
+    def __or__(self, other):
+        return OrFilter(self, other)
+
+    def find(self, filepath):
+        from pathfinder import walk_and_filter
+        return walk_and_filter(filepath, self)
+
+class AlwaysAcceptFilter(Filter):
     """ Accept every path. """
 
     def accepts(self, _):
         """ Always returns True. """
         return True
         
-class DirectoryFilter(object):
+class DirectoryFilter(Filter):
     """ Accept directory paths. """
 
     def accepts(self, filepath):
         """ Returns True if filepath represents a directory. """
         return os.path.isdir(filepath)
 
-class FileFilter(object):
+class FileFilter(Filter):
     """ Accept file paths. """
 
     def accepts(self, filepath):
         """ Returns True if filepath represents a file. """
         return os.path.isfile(filepath)
 
-class RegexFilter(object):
+class RegexFilter(Filter):
     """ Accept paths if they match the specified regular expression. """
 
     def __init__(self, regex):
@@ -38,7 +50,7 @@ class RegexFilter(object):
         """ Returns True if the regular expression matches the filepath. """
         return self.regex.match(filepath) is not None
     
-class FnmatchFilter(object):
+class FnmatchFilter(Filter):
     """ Accept paths if they match the specifed fnmatch pattern. """
 
     def __init__(self, pattern):
@@ -50,7 +62,7 @@ class FnmatchFilter(object):
         """ Returns True if the fnmatch pattern matches the filepath. """
         return fnmatch.fnmatch(filepath, self.pattern)
     
-class AndFilter(list):
+class AndFilter(Filter, list):
     """ Accept paths if all of it's filters accept the path. """
 
     def __init__(self, *args):
@@ -64,7 +76,7 @@ class AndFilter(list):
             result = result and sub_filter.accepts(filepath)
         return result
 
-class OrFilter(list):
+class OrFilter(Filter, list):
     """ Accept paths if any of it's filters accept the path. """
 
     def __init__(self, *args):
@@ -78,7 +90,7 @@ class OrFilter(list):
             result = result or sub_filter.accepts(filepath)
         return result
 
-class NotFilter(object):
+class NotFilter(Filter):
     """ Negate the accept of the specified filter. """
 
     def __init__(self, pathfilter):
@@ -121,7 +133,7 @@ class SizeFilter(FileFilter):
             return True
         return False
         
-class ImageFilter(object):
+class ImageFilter(Filter):
     """ Accept paths for Image files. """
 
     def __init__(self):

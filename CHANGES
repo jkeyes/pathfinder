@@ -7,6 +7,8 @@
   * moved code to pathfinder package
   * use nose for testing
   * changed license from BSD to MIT
+  * override __or__ and __and__ for easy compound filter creation
+  * new Filter.find method
 
 0.3.1 
   * Removed hard-coded file separators

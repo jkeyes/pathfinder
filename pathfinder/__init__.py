@@ -6,11 +6,7 @@
 
 import os
 
-from .filters import AlwaysAcceptFilter
-from .filters import DirectoryFilter
-from .filters import FileFilter
-from .filters import FnmatchFilter
-from .filters import RegexFilter
+from .filters import *
 
 def walk_and_filter(filepath, pathfilter, 
         ignore=None, abspath=None, depth=None):
@@ -69,8 +65,12 @@ def walk_and_filter(filepath, pathfilter,
     os.chdir(pwd)
     return result
     
-    
 def pathfind(filepath, just_dirs=None, just_files=None, regex=None, \
+            fnmatch=None, filter=None, ignore=None, abspath=None, depth=None):
+    return find(filepath, just_dirs, just_files, regex, fnmatch,
+            filter, ignore, abspath, depth)
+    
+def find(filepath, just_dirs=None, just_files=None, regex=None, \
             fnmatch=None, filter=None, ignore=None, abspath=None, depth=None):
     """
     Find paths in the tree rooted at filepath.

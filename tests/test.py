@@ -26,6 +26,10 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, 'dir3') in paths)
         self.assertTrue(os.path.join(BASEPATH, '.dir4') in paths)
 
+        # use Filter.find
+        paths_2 = DirectoryFilter().find(BASEPATH)
+        self.assertEqual(paths, paths_2)
+
     def test_just_files(self):
         """ Test just_files parameter."""
         # only find files
@@ -48,6 +52,10 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, 'dir3', 'file8') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir3', '.file9') in paths)
         self.assertTrue(os.path.join(BASEPATH, '.dir4', 'file10') in paths)
+
+        # use Filter.find
+        paths_2 = FileFilter().find(BASEPATH)
+        self.assertEqual(paths, paths_2)
 
     def test_regex(self):
         """ Test regex parameter."""
@@ -76,6 +84,10 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, 'dir3', 'file8') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir3', '.file9') in paths)
         self.assertTrue(os.path.join(BASEPATH, '.dir4', 'file10') in paths)
+
+        # use Filter.find
+        paths_2 = RegexFilter('.*').find(BASEPATH)
+        self.assertEqual(paths, paths_2)
 
         # find only files and directories with a t in the extension
         paths = pathfind(BASEPATH, regex=".*\..*t.*$")
@@ -160,7 +172,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, 'dir2', 'file7.html') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir3', 'file8') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir3', '.file9') in paths)
-        
+
     def test_and(self):
         """ Test AndFilter."""
         # find directories with a 2 anywhere in the path
@@ -168,6 +180,15 @@ class FindTest(unittest.TestCase):
         paths = pathfind(BASEPATH, filter=filt)
         self.assertEqual(1, len(paths))
         self.assertTrue(os.path.join(BASEPATH, 'dir2') in paths)
+
+        # test overridden __and__
+        filt = DirectoryFilter() & RegexFilter('.*2.*')
+        paths_2 = pathfind(BASEPATH, filter=filt)
+        self.assertEqual(paths, paths_2)
+
+        # use Filter.find
+        paths_3 = AndFilter(DirectoryFilter(), RegexFilter('.*2.*')).find(BASEPATH)
+        self.assertEqual(paths, paths_3)
 
     def test_or(self):
         """ Test OrFilter."""
@@ -184,6 +205,15 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, 'file2.dat') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir2', 'file6.log') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir2', 'file7.html') in paths)
+
+        # test overridden __or__
+        filt = DirectoryFilter() | RegexFilter('.*2.*')
+        paths_2 = pathfind(BASEPATH, filter=filt)
+        self.assertEqual(paths, paths_2)
+
+        # use Filter.find
+        paths_3 = OrFilter(DirectoryFilter(), RegexFilter('.*2.*')).find(BASEPATH)
+        self.assertEqual(paths, paths_3)
 
     def test_not(self):
         """ Test NotFilter."""
