@@ -231,10 +231,12 @@ class FindTest(unittest.TestCase):
         # find all directories and all files and directories 
         # with a 2 in the path and no directories that begin
         # with a dot
+        print BASEPATH
+        print AlwaysAcceptFilter().find(BASEPATH)
         filt = OrFilter(DirectoryFilter(), RegexFilter('.*2.*'))
         ignore = DotDirectoryFilter()
         paths = pathfind(BASEPATH, filter=filt, ignore=ignore)
-        print paths
+        print "\n".join(paths)
         self.assertEqual(7, len(paths))
         self.assertTrue(os.path.join(BASEPATH, 'dir1') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir1', 'subdirectory') in paths)
@@ -243,6 +245,13 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, 'file2.dat') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir2', 'file6.log') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir2', 'file7.html') in paths)
+
+ # '/home/vagrant/builds/jkeyes/pathfinder/tests/data/dir1/subdirectory', 
+ # '/home/vagrant/builds/jkeyes/pathfinder/tests/data/dir2', 
+ # '/home/vagrant/builds/jkeyes/pathfinder/tests/data/dir3', 
+ # '/home/vagrant/builds/jkeyes/pathfinder/tests/data/file2.dat', 
+ # '/home/vagrant/builds/jkeyes/pathfinder/tests/data/dir2/file6.log']
+ # '/home/vagrant/builds/jkeyes/pathfinder/tests/data/dir2/file7.html', 
 
     def test_abspath(self):
         """ Make sure all paths are absolute paths."""
