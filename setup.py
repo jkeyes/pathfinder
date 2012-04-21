@@ -1,12 +1,12 @@
 from distutils.core import setup
 
 setup(name='pathfinder',
-    description='Pathfinder makes os.walk usable',
+    description='Pathfinder os.walk for humans',
     url='http://jkeyes.github.com/pathfinder/',
     author='John Keyes',
     author_email='pathfinder@keyes.ie',
-    version='0.3.1',
-    license='BSD',
+    version='0.4',
+    license='MIT License',
     classifiers = [
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
