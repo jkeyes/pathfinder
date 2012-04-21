@@ -234,6 +234,7 @@ class FindTest(unittest.TestCase):
         filt = OrFilter(DirectoryFilter(), RegexFilter('.*2.*'))
         ignore = DotDirectoryFilter()
         paths = pathfind(BASEPATH, filter=filt, ignore=ignore)
+        print paths
         self.assertEqual(7, len(paths))
         self.assertTrue(os.path.join(BASEPATH, 'dir1') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir1', 'subdirectory') in paths)
