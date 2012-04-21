@@ -49,13 +49,14 @@ def walk_and_filter(filepath, pathfilter,
         
         # process in order
         # dirs.reverse()
+        ignored = []
         for adir in dirs:
             print "Testing ", adir
             dirpath = os.path.normpath(os.path.join(root, adir))
             print "        ", dirpath
             if ignore and ignore.accepts(dirpath):
                 print "        ignore... %s" % (adir)
-                # dirs.remove(adir)
+                ignored.append(adir)
                 continue
             else:
                 print "        test it..."
@@ -73,6 +74,10 @@ def walk_and_filter(filepath, pathfilter,
                     result.append(os.path.abspath(filepath))
                 else:
                     result.append(os.path.join(base_path, filepath))
+
+        # remove the dirs we are ignoring
+        for adir in ignored:
+            dirs.remove(adir)
     os.chdir(pwd)
     return result
     
