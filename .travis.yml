@@ -6,4 +6,4 @@ python:
 install: 
   - pip install -r requirements.txt --use-mirrors
 script:  
-  - nosetests tests -s
+  - nosetests tests/test.py:FindTest.test_ignore -s

@@ -232,7 +232,7 @@ class FindTest(unittest.TestCase):
         # with a 2 in the path and no directories that begin
         # with a dot
         print BASEPATH
-        print AlwaysAcceptFilter().find(BASEPATH)
+        #print AlwaysAcceptFilter().find(BASEPATH)
         filt = OrFilter(DirectoryFilter(), RegexFilter('.*2.*'))
         ignore = DotDirectoryFilter()
         paths = pathfind(BASEPATH, filter=filt, ignore=ignore)
