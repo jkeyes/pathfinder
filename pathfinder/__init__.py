@@ -37,10 +37,6 @@ def walk_and_filter(filepath, pathfilter,
 
     os.chdir(base_path)
     for root, dirs, files in os.walk('.'):
-        
-        print "ROOT %s" % (root)
-        print "DIRS %s" % (dirs)
-        print "FILES %s" % (files)
 
         # descend the tree to a certain depth
         level = len(root.split(os.sep))
@@ -48,26 +44,20 @@ def walk_and_filter(filepath, pathfilter,
             break
         
         # process in order
-        # dirs.reverse()
+        dirs.reverse()
         ignored = []
         for adir in dirs:
-            print "Testing ", adir
             dirpath = os.path.normpath(os.path.join(root, adir))
-            print "        ", dirpath
             if ignore and ignore.accepts(dirpath):
-                print "        ignore... %s" % (adir)
                 ignored.append(adir)
                 continue
             else:
-                print "        test it..."
                 if pathfilter.accepts(dirpath):
-                    print "        accepted..."
                     if abspath:
                         result.append(os.path.abspath(dirpath))
                     else:
                         result.append(os.path.join(base_path, dirpath))
         for afile in files:
-            print "Testing ", afile
             filepath = os.path.normpath(os.path.join(root, afile))
             if pathfilter.accepts(filepath):
                 if abspath:
