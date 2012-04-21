@@ -6,7 +6,7 @@
 
 import os
 
-from .filters import *
+from pathfinder.filters import *
 
 def walk_and_filter(filepath, pathfilter, 
         ignore=None, abspath=None, depth=None):
