@@ -29,6 +29,7 @@ class DirectoryFilter(Filter):
 
     def accepts(self, filepath):
         """ Returns True if filepath represents a directory. """
+        print "DF filepath=%s isdir=%s" % (filepath, os.path.isdir(filepath))
         return os.path.isdir(filepath)
 
 class FileFilter(Filter):
