@@ -2,3 +2,6 @@
 
 nose==1.1.2
 coverage==3.5.1
+
+# for Image filter support install Pillow
+# Pillow==1.7.7
