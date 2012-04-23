@@ -9,8 +9,9 @@ Welcome to pathfinder's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :hidden:
 
+   api
 
 
 Indices and tables
