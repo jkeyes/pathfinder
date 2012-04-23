@@ -1,7 +1,12 @@
 *.pyc
+*.egg-info
 .DS_Store
 .coverage
 build
 dist
-venv
+venv*
 MANIFEST
+docs/_build
+
+pathfinder.sublime-project
+pathfinder.sublime-workspace
