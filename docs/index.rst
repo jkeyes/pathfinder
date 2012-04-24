@@ -137,3 +137,42 @@ And we can also search for images based on their color paletter:
     from pathfinder import GreyscaleImageFilter
     find(".", filter=GreyscaleImageFilter())
 
+Combining filters
+-----------------
+
+Filters can also be combined to create even more complex filters
+(just in case you need them). pathfinder supports AND, OR and NOT
+functions.
+
+::
+
+    # color images AND greater than 400 bytes
+    from pathfinder import ColorImageFilter
+    from pathfinder import SizeFilter
+    color = ColorImageFilter()
+    size = SizeFilter(max_bytes=400)
+    find(".", filter=color & size)
+
+    # pdf OR txt files
+    from pathfinder import FnmatchFilter
+    txt = FnmatchFilter("*.txt")
+    pdf = FnmatchFilter("*.pdf")
+    find(".", filter=txt | pdf)
+
+    # txt files, but NOT ones begining with a
+    from pathfinder import NotFilter
+    from pathfinder import SizeFilter
+    from pathfinder import FnmatchFilter
+    txt = FnmatchFilter("*.txt")
+    afiles = NotFilter(FnmatchFilter("*/a*"))
+    find(".", filter=txt & afiles)
+
+find shortcut
+-------------
+
+You can also run a find directly from a filter:
+
+::
+
+    from pathfinder import SizeFilter
+    SizeFilter(max_bytes=1024).find(".")
