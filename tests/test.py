@@ -246,7 +246,7 @@ class FindTest(unittest.TestCase):
         filt = FnmatchFilter("*.txt")
         ignore = FnmatchFilter("*4.txt")
 
-        all_paths = pathfind(BASEPATH, filter=filt, ignore=ignore)
+        all_paths = pathfind(BASEPATH, filter=filt)
         self.assertEqual(4, len(all_paths))
         self.assertTrue("4.txt" in " ".join(all_paths))
 
