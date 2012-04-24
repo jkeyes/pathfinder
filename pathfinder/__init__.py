@@ -51,28 +51,32 @@ def walk_and_filter(filepath, pathfilter,
             if ignore and ignore.accepts(dirpath):
                 ignored.append(adir)
                 continue
-            else:
-                if pathfilter.accepts(dirpath):
-                    if abspath:
-                        result.append(os.path.abspath(dirpath))
-                    else:
-                        result.append(os.path.join(base_path, dirpath))
+            if pathfilter.accepts(dirpath):
+                if abspath:
+                    result.append(os.path.abspath(dirpath))
+                else:
+                    result.append(os.path.join(base_path, dirpath))
+        # remove the dirs we are ignoring
+        for adir in ignored:
+            dirs.remove(adir)
+
         for afile in files:
             filepath = os.path.normpath(os.path.join(root, afile))
+            if ignore and ignore.accepts(filepath):
+                continue
             if pathfilter.accepts(filepath):
                 if abspath:
                     result.append(os.path.abspath(filepath))
                 else:
                     result.append(os.path.join(base_path, filepath))
 
-        # remove the dirs we are ignoring
-        for adir in ignored:
-            dirs.remove(adir)
     os.chdir(pwd)
     return result
     
 def pathfind(filepath, just_dirs=None, just_files=None, regex=None, \
             fnmatch=None, filter=None, ignore=None, abspath=None, depth=None):
+    import warnings
+    warnings.warn("Deprecated. Please use find.", DeprecationWarning)
     return find(filepath, just_dirs, just_files, regex, fnmatch,
             filter, ignore, abspath, depth)
     

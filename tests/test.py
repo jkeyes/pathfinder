@@ -243,6 +243,17 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, 'dir2', 'file6.log') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'dir2', 'file7.html') in paths)
 
+        filt = FnmatchFilter("*.txt")
+        ignore = FnmatchFilter("*4.txt")
+
+        all_paths = pathfind(BASEPATH, filter=filt, ignore=ignore)
+        self.assertEqual(4, len(all_paths))
+        self.assertTrue("4.txt" in " ".join(all_paths))
+
+        ignore_paths = pathfind(BASEPATH, filter=filt, ignore=ignore)
+        self.assertEqual(3, len(ignore_paths))
+        self.assertFalse("4.txt" in " ".join(ignore_paths))
+
     def test_abspath(self):
         """ Make sure all paths are absolute paths."""
         cwd = os.getcwd()
