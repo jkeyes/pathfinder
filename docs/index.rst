@@ -7,6 +7,7 @@
    :hidden:
 
    api
+   changelog
 
 ==========
 pathfinder
@@ -176,3 +177,8 @@ You can also run a find directly from a filter:
 
     from pathfinder import SizeFilter
     SizeFilter(max_bytes=1024).find(".")
+
+Changelog
+=========
+
+The :doc:`changelog` keeps track of changes per release.

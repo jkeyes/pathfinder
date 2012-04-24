@@ -1,26 +1,3 @@
-0.4
-  * File size filter
-  * Image filter
-  * Image dimensions filter
-  * Color image filter
-  * Greyscale image filter
-  * moved code to pathfinder package
-  * use nose for testing
-  * changed license from BSD to MIT
-  * override __or__ and __and__ for easy compound filter creation
-  * new Filter.find method
+For installation instructions see http://readthedocs.org/docs/pathfinder/en/latest/changelog.html
 
-0.3.1 
-  * Removed hard-coded file separators
-  * Added docstrings and comments
-
-0.3
-  * Added depth parameter to walk_and_filter
-
-0.2
-  * Added setup.py
-  * Fixed bug in NotFilter
-  * Tided pathfind function.
-
-0.1 
-  * First Cut
+If you are using a source distribution please see docs/changelog.rst
