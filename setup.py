@@ -1,11 +1,18 @@
-from distutils.core import setup
+#
+# Copyright 2012 John Keyes
+#
+# http://jkeyes.mit-license.org/
+#
+
+from setuptools import find_packages
+from setuptools import setup
 
 setup(name='pathfinder',
     description='Pathfinder os.walk for humans',
     url='http://jkeyes.github.com/pathfinder/',
     author='John Keyes',
     author_email='pathfinder@keyes.ie',
-    version='0.4',
+    version='0.4.1',
     license='MIT License',
     classifiers = [
         'Development Status :: 4 - Beta',
@@ -14,5 +21,5 @@ setup(name='pathfinder',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
     ],
-    py_modules=['pathfinder']
+    packages=find_packages()
 )

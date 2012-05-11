@@ -2,6 +2,8 @@
 Changelog
 =========
 
+* 0.4.1
+   * Fixed install error in setup.py
 * 0.4
    * File size filter
    * Image filter
