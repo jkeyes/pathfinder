@@ -8,7 +8,11 @@ import os
 
 from pathfinder.filters import *
 
-def walk_and_filter(filepath, pathfilter, 
+def walk_and_filter(filepath, pathfilter, ignore=None, abspath=None, depth=None):
+    return list(walk_and_filter_generator(filepath, pathfilter, ignore,
+        abspath, depth))
+
+def walk_and_filter_generator(filepath, pathfilter, 
         ignore=None, abspath=None, depth=None):
     """ 
     Walk the file tree and filter it's contents. 
@@ -53,9 +57,11 @@ def walk_and_filter(filepath, pathfilter,
                 continue
             if pathfilter.accepts(dirpath):
                 if abspath:
-                    result.append(os.path.abspath(dirpath))
+                    hit_path = os.path.abspath(dirpath)
                 else:
-                    result.append(os.path.join(base_path, dirpath))
+                    hit_path = os.path.join(base_path, dirpath)
+                yield hit_path
+
         # remove the dirs we are ignoring
         for adir in ignored:
             dirs.remove(adir)
@@ -66,12 +72,12 @@ def walk_and_filter(filepath, pathfilter,
                 continue
             if pathfilter.accepts(filepath):
                 if abspath:
-                    result.append(os.path.abspath(filepath))
+                    hit_path = os.path.abspath(filepath)
                 else:
-                    result.append(os.path.join(base_path, filepath))
+                    hit_path = os.path.join(base_path, filepath)
+                yield hit_path
 
     os.chdir(pwd)
-    return result
     
 def pathfind(filepath, just_dirs=None, just_files=None, regex=None, \
             fnmatch=None, filter=None, ignore=None, abspath=None, depth=None):
@@ -80,8 +86,9 @@ def pathfind(filepath, just_dirs=None, just_files=None, regex=None, \
     return find(filepath, just_dirs, just_files, regex, fnmatch,
             filter, ignore, abspath, depth)
     
-def find(filepath, just_dirs=None, just_files=None, regex=None, \
-            fnmatch=None, filter=None, ignore=None, abspath=None, depth=None):
+def find(filepath, just_dirs=None, just_files=None, regex=None,
+            fnmatch=None, filter=None, ignore=None, abspath=None, depth=None,
+            generator=None):
     """
     Find paths in the tree rooted at filepath.
     """
@@ -96,4 +103,7 @@ def find(filepath, just_dirs=None, just_files=None, regex=None, \
     elif not filter:
         filter = AlwaysAcceptFilter()
 
-    return walk_and_filter(filepath, filter, ignore, abspath, depth)
+    if generator:
+        return walk_and_filter_generator(filepath, filter, ignore, abspath, depth)
+    else:
+        return walk_and_filter(filepath, filter, ignore, abspath, depth)
