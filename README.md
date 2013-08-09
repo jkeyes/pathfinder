@@ -1,10 +1,12 @@
-pathfinder
-==========
+# pathfinder
 
 A utility to find file paths.
 
-Examples
---------
+## Documentation
+
+In depth documentation is available on [Read the Docs](https://pathfinder.readthedocs.org/en/latest/)
+
+## Examples
 
 from pathfinder import find
 
@@ -38,3 +40,7 @@ paths = find(".", filter=ImageFilter())
 
 # and an even shorter way
 paths = ImageFilter().find(".")
+
+## Build Status
+
+[![Build Status](https://travis-ci.org/jkeyes/pathfinder.png?branch=pillow-dev)](https://travis-ci.org/jkeyes/pathfinder)
