@@ -23,7 +23,7 @@ class AlwaysAcceptFilter(Filter):
     def accepts(self, _):
         """ Always returns True. """
         return True
-        
+
 class DirectoryFilter(Filter):
     """ Accept directory paths. """
 
@@ -49,7 +49,7 @@ class RegexFilter(Filter):
     def accepts(self, filepath):
         """ Returns True if the regular expression matches the filepath. """
         return self.regex.match(filepath) is not None
-    
+
 class FnmatchFilter(Filter):
     """ Accept paths if they match the specifed fnmatch pattern. """
 
@@ -61,7 +61,7 @@ class FnmatchFilter(Filter):
     def accepts(self, filepath):
         """ Returns True if the fnmatch pattern matches the filepath. """
         return fnmatch.fnmatch(filepath, self.pattern)
-    
+
 class AndFilter(Filter, list):
     """ Accept paths if all of it's filters accept the path. """
 
@@ -71,10 +71,7 @@ class AndFilter(Filter, list):
 
     def accepts(self, filepath):
         """ Returns True if all of the filters in this filter return True. """
-        result = True
-        for sub_filter in self:
-            result = result and sub_filter.accepts(filepath)
-        return result
+        return all(sub_filter.accepts(filepath) for sub_filter in self)
 
 class OrFilter(Filter, list):
     """ Accept paths if any of it's filters accept the path. """
@@ -85,10 +82,7 @@ class OrFilter(Filter, list):
 
     def accepts(self, filepath):
         """ Returns True if any of the filters in this filter return True. """
-        result = False
-        for sub_filter in self:
-            result = result or sub_filter.accepts(filepath)
-        return result
+        return any(sub_filter.accepts(filepath) for sub_filter in self)
 
 class NotFilter(Filter):
     """ Negate the accept of the specified filter. """
@@ -106,12 +100,12 @@ class DotDirectoryFilter(AndFilter):
     """ Do not accept a path for a directory that begins with a period. """
 
     def __init__(self):
-        """ 
+        """
         Initialise the filter to ignore directories beginning with
         a period.
         """
         super(DotDirectoryFilter, self).__init__(
-                DirectoryFilter(), 
+                DirectoryFilter(),
                 RegexFilter(r'.*%s*\..*$' % (os.sep)))
 
 class SizeFilter(FileFilter):
@@ -120,7 +114,7 @@ class SizeFilter(FileFilter):
         self.file_filter = FileFilter()
         self.max_bytes = max_bytes
         self.min_bytes = min_bytes
-    
+
     def accepts(self, filepath):
         if super(SizeFilter, self).accepts(filepath):
             stat = os.stat(filepath)
@@ -132,7 +126,7 @@ class SizeFilter(FileFilter):
                     return False
             return True
         return False
-        
+
 class ImageFilter(Filter):
     """ Accept paths for Image files. """
 
@@ -184,9 +178,9 @@ class ImageDimensionFilter(ImageFilter):
                 return False
             return True
         return False
-        
+
 class GreyscaleImageFilter(ImageFilter):
-    
+
     def accepts(self, filepath):
         if super(GreyscaleImageFilter, self).accepts(filepath):
             from PIL import Image
@@ -207,13 +201,13 @@ class GreyscaleImageFilter(ImageFilter):
                 return stdv(s.mean[:3]) < 1
         return False
 
-    
+
 class ColorImageFilter(ImageFilter):
 
     def accepts(self, filepath):
         if super(ColorImageFilter, self).accepts(filepath):
             from PIL import Image
-            from PIL import ImageStat 
+            from PIL import ImageStat
 
             image = Image.open(filepath)
             palette = image.getpalette()
@@ -229,7 +223,7 @@ class ColorImageFilter(ImageFilter):
                     return False
                 return stdv(s.mean[:3]) > 1
         return False
-        
+
 from math import sqrt
 
 def stdv(x):
