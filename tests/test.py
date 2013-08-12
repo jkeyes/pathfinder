@@ -7,6 +7,8 @@
 import os
 import unittest
 
+from pathfinder import find
+from pathfinder import find_paths
 from pathfinder import pathfind
 from pathfinder import walk_and_filter
 from pathfinder.filters import *
@@ -363,3 +365,31 @@ class FindTest(unittest.TestCase):
     except ImportError:
         pass
 
+    def test_generator(self):
+        """ Test with no parameters. """
+        # find all paths
+        paths = []
+        for path in find_paths(BASEPATH):
+            paths.append(path)
+        self.assertEqual(22, len(paths))
+        self.assertTrue(os.path.join(BASEPATH, 'dir1') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir1', 'subdirectory') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir2') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir3') in paths)
+        self.assertTrue(os.path.join(BASEPATH, '.dir4') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'file1.txt') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'file2.dat') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'file3.txt') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'python_logo.gif') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'python_logo.png') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'python_logo_gs.gif') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'python_logo_gs.jpg') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'python_logo_gs.png') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'transparent_gs.png') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir1', 'subdirectory', 'sub.txt') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir1', 'file4.txt') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir1', 'file5.log') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir2', 'file6.log') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir2', 'file7.html') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir3', 'file8') in paths)
+        self.assertTrue(os.path.join(BASEPATH, 'dir3', '.file9') in paths)
