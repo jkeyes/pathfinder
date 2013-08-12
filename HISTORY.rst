@@ -7,6 +7,7 @@ History
 +++
 
 - find_paths function added which returns a generator
+- use all in AndFilter and any in OrFilter
 
 0.4.1
 +++++
