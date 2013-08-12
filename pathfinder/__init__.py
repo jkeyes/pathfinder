@@ -86,24 +86,36 @@ def pathfind(filepath, just_dirs=None, just_files=None, regex=None, \
     return find(filepath, just_dirs, just_files, regex, fnmatch,
             filter, ignore, abspath, depth)
     
-def find(filepath, just_dirs=None, just_files=None, regex=None,
-            fnmatch=None, filter=None, ignore=None, abspath=None, depth=None,
-            generator=None):
+
+def find(
+        directory_path, just_dirs=None, just_files=None, regex=None,
+        fnmatch=None, filter=None, ignore=None, abspath=None, depth=None):
+    """
+    Find paths in the tree rooted at filepath.
+    """
+    import warnings
+    warnings.warn("Deprecated. Please use find_paths.", DeprecationWarning)
+    return list(find_paths(directory_path, just_dirs, just_files, regex, fnmatch,
+            filter, ignore, abspath, depth))
+
+
+def find_paths(
+        directory_path, just_dirs=None, just_files=None, regex=None,
+        fnmatch=None, filter=None, ignore=None, abspath=None, depth=None):
     """
     Find paths in the tree rooted at filepath.
     """
     if just_dirs:
-        filter = DirectoryFilter()
+        path_filter = DirectoryFilter()
     elif just_files:
-        filter = FileFilter()
+        path_filter = FileFilter()
     elif regex:
-        filter = RegexFilter(regex)
+        path_filter = RegexFilter(regex)
     elif fnmatch:
-        filter = FnmatchFilter(fnmatch)
+        path_filter = FnmatchFilter(fnmatch)
     elif not filter:
-        filter = AlwaysAcceptFilter()
-
-    if generator:
-        return walk_and_filter_generator(filepath, filter, ignore, abspath, depth)
+        path_filter = AlwaysAcceptFilter()
     else:
-        return walk_and_filter(filepath, filter, ignore, abspath, depth)
+        path_filter = filter
+
+    return walk_and_filter_generator(directory_path, path_filter, ignore, abspath, depth)

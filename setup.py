@@ -9,10 +9,11 @@ from setuptools import setup
 
 setup(name='pathfinder',
     description='Pathfinder os.walk for humans',
+    long_description=open('README.rst').read(),
     url='http://jkeyes.github.com/pathfinder/',
     author='John Keyes',
     author_email='pathfinder@keyes.ie',
-    version='0.4.1',
+    version='0.5',
     license='MIT License',
     classifiers = [
         'Development Status :: 4 - Beta',

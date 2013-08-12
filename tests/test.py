@@ -8,6 +8,7 @@ import os
 import unittest
 
 from pathfinder import find
+from pathfinder import find_paths
 from pathfinder import pathfind
 from pathfinder import walk_and_filter
 from pathfinder.filters import *
@@ -368,7 +369,7 @@ class FindTest(unittest.TestCase):
         """ Test with no parameters. """
         # find all paths
         paths = []
-        for path in find(BASEPATH, generator=True):
+        for path in find_paths(BASEPATH):
             paths.append(path)
         self.assertEqual(22, len(paths))
         self.assertTrue(os.path.join(BASEPATH, 'dir1') in paths)
