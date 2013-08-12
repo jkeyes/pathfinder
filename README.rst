@@ -11,7 +11,7 @@ Examples
 
 .. code-block:: pycon
 
-from pathfinder import find
+    from pathfinder import find
 
     # get all directories and sub-directories in current directory
     paths = find(".", just_dirs=True)
