@@ -2,6 +2,11 @@
 Changelog
 =========
 
+* 0.5.1
+   * Added README.rst to MANIFEST.in to prevent install error from pip.
+* 0.5
+   * new find_paths function returns a generator
+   * using any and all in OrFiter and AndFilter
 * 0.4.1
    * Fixed install error in setup.py
 * 0.4
