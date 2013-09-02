@@ -2,6 +2,8 @@
 Changelog
 =========
 
+* 0.5.2
+   * Silly error in MANIFEST.in resolved.
 * 0.5.1
    * Added README.rst to MANIFEST.in to prevent install error from pip.
 * 0.5
