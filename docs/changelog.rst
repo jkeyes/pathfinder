@@ -2,6 +2,8 @@
 Changelog
 =========
 
+* 0.5.3
+   * do not `chdir` in `walk_and_filter_generator`. `#3 <https://github.com/jkeyes/pathfinder/pull/3>`_. (https://github.com/rubik)
 * 0.5.2
    * Silly error in MANIFEST.in resolved.
 * 0.5.1
