@@ -32,15 +32,12 @@ def walk_and_filter_generator(filepath, pathfilter,
     if abspath is None:
         abspath = False
 
-    result = []
-    pwd = os.getcwd()
     if os.path.isdir(filepath):
         base_path = os.path.normpath(filepath)
     else:
         base_path = os.path.normpath(os.path.dirname(filepath))
 
-    os.chdir(base_path)
-    for root, dirs, files in os.walk('.'):
+    for root, dirs, files in os.walk(base_path):
 
         # descend the tree to a certain depth
         level = len(root.split(os.sep))
@@ -72,12 +69,9 @@ def walk_and_filter_generator(filepath, pathfilter,
                 continue
             if pathfilter.accepts(filepath):
                 if abspath:
-                    hit_path = os.path.abspath(filepath)
-                else:
-                    hit_path = os.path.join(base_path, filepath)
-                yield hit_path
+                    filepath = os.path.abspath(filepath)
+                yield filepath
 
-    os.chdir(pwd)
     
 def pathfind(filepath, just_dirs=None, just_files=None, regex=None, \
             fnmatch=None, filter=None, ignore=None, abspath=None, depth=None):
