@@ -1,3 +1,5 @@
+Pydoc
+=====
 
 .. automodule:: pathfinder
     :members:

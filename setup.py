@@ -13,7 +13,7 @@ setup(name='pathfinder',
     url='http://jkeyes.github.com/pathfinder/',
     author='John Keyes',
     author_email='john@keyes.ie',
-    version='0.5.3',
+    version='0.5.4',
     license='MIT License',
     classifiers = [
         'Development Status :: 4 - Beta',
