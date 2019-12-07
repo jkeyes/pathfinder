@@ -5,7 +5,7 @@ import fnmatch as fnmatch_module
 import os
 import re
 
-class Filter(object):
+class Filter():
 
     def __and__(self, other):
         return AndFilter(self, other)

@@ -12,7 +12,6 @@
 # serve to show the default.
 
 import sys, os
-import sphinx_rtd_theme
 from datetime import datetime
 
 today = datetime.utcnow()

@@ -6,7 +6,7 @@
 
 import os
 
-from pathfinder.filters import *
+from pathfinder import filters
 
 def walk_and_filter(filepath, pathfilter, ignore=None, abspath=None, depth=None):
     return list(walk_and_filter_generator(filepath, pathfilter, ignore,
@@ -100,15 +100,15 @@ def find_paths(
     Find paths in the tree rooted at filepath.
     """
     if just_dirs:
-        path_filter = DirectoryFilter()
+        path_filter = filters.DirectoryFilter()
     elif just_files:
-        path_filter = FileFilter()
+        path_filter = filters.FileFilter()
     elif regex:
-        path_filter = RegexFilter(regex)
+        path_filter = filters.RegexFilter(regex)
     elif fnmatch:
-        path_filter = FnmatchFilter(fnmatch)
+        path_filter = filters.FnmatchFilter(fnmatch)
     elif not filter:
-        path_filter = AlwaysAcceptFilter()
+        path_filter = filters.AlwaysAcceptFilter()
     else:
         path_filter = filter
 
