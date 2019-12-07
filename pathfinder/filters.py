@@ -192,13 +192,12 @@ class GreyscaleImageFilter(ImageFilter):
             if palette:
                 # GIF support
                 return is_greyscale_palette(palette)
-            else:
-                s = ImageStat.Stat(image)
 
-                # B&W JPEG
-                if image.mode == "L":
-                    return True
-                return stdv(s.mean[:3]) < 1
+            s = ImageStat.Stat(image)
+            # B&W JPEG
+            if image.mode == "L":
+                return True
+            return stdv(s.mean[:3]) < 1
         return False
 
 
@@ -215,13 +214,12 @@ class ColorImageFilter(ImageFilter):
             if palette:
                 # GIF SUPPORT
                 return is_color_palette(palette)
-            else:
-                s = ImageStat.Stat(image)
 
-                # B&W JPEG
-                if image.mode == "L":
-                    return False
-                return stdv(s.mean[:3]) > 1
+            s = ImageStat.Stat(image)
+            # B&W JPEG
+            if image.mode == "L":
+                return False
+            return stdv(s.mean[:3]) > 1
         return False
 
 from math import sqrt
