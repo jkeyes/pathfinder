@@ -53,3 +53,12 @@ To install pathfinder, simply:
 .. code-block:: bash
 
     $ pip install pathfinder
+
+Development
+-----------
+
+To install development dependencies run:
+
+.. code-block:: bash
+
+    $ pip install -r dev-requirements.txt
