@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.6.1
++++++
+* fixed example in README.rst
+
 0.6.0
 +++++
 * removed deprecated find and pathfind functions
