@@ -7,7 +7,6 @@
 import os
 import unittest
 
-from pathfinder import find
 from pathfinder import find_paths
 from pathfinder import pathfind
 from pathfinder import walk_and_filter
