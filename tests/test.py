@@ -10,7 +10,7 @@ import unittest
 from pathfinder import find_paths
 from pathfinder import pathfind
 from pathfinder import walk_and_filter
-from pathfinder.filters import *
+from pathfinder.filters import SizeFilter, DirectoryFilter, FileFilter, RegexFilter, AndFilter, OrFilter, NotFilter, FnmatchFilter, DotDirectoryFilter, ImageDimensionFilter, ImageFilter, ColorImageFilter, GreyscaleImageFilter
 
 BASEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
@@ -91,7 +91,7 @@ class FindTest(unittest.TestCase):
         self.assertEqual(paths, paths_2)
 
         # find only files and directories with a t in the extension
-        paths = pathfind(BASEPATH, regex=".*\..*t.*$")
+        paths = pathfind(BASEPATH, regex=r".*\..*t.*$")
         self.assertEqual(6, len(paths))
         self.assertTrue(os.path.join(BASEPATH, 'file1.txt') in paths)
         self.assertTrue(os.path.join(BASEPATH, 'file2.dat') in paths)

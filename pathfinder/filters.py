@@ -1,7 +1,7 @@
 """
 pathfinder - making it easy to find paths
 """
-import fnmatch
+import fnmatch as fnmatch_module
 import os
 import re
 
@@ -60,7 +60,7 @@ class FnmatchFilter(Filter):
 
     def accepts(self, filepath):
         """ Returns True if the fnmatch pattern matches the filepath. """
-        return fnmatch.fnmatch(filepath, self.pattern)
+        return fnmatch_module.fnmatch(filepath, self.pattern)
 
 class AndFilter(Filter, list):
     """ Accept paths if all of it's filters accept the path. """
@@ -227,7 +227,7 @@ from math import sqrt
 def stdv(x):
     n, _sum, mean, std = len(x), sum(x), 0, 0
     mean = _sum / float(n)
-    sum_diff = sum([(a - mean) ** 2 for a in x])
+    sum_diff = sum((a - mean) ** 2 for a in x)
     std = sqrt(sum_diff / float(n - 1))
     return std
 

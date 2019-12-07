@@ -7,7 +7,7 @@ paths = find(".", just_dirs=True)
 paths = find(".", just_files=True)
 
 # get all jpg files using a regex
-paths = find(".", regex=".*\.jpg$")
+paths = find(".", regex=r".*\.jpg$")
 
 # get all jpg files using posix wildcards
 paths = find(".", fnmatch="*.jpg")
