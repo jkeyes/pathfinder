@@ -5,7 +5,8 @@ test_patterns = [
 ]
 
 exclude_patterns = [
-  
+  "docs/conf.py",
+  "example.py"
 ]
 
 [[analyzers]]

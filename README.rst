@@ -1,10 +1,21 @@
 pathfinder
 ==========
 
+A utility to find file paths.
+
+.. image:: https://snyk.io/test/github/jkeyes/pathfinder/badge.svg
+    :target: https://snyk.io/test/github/jkeyes/pathfinder
+
+|
+
 .. image:: https://travis-ci.org/jkeyes/pathfinder.png?branch=master
     :target: https://travis-ci.org/jkeyes/pathfinder
 
-A utility to find file paths.
+|
+
+.. image:: https://static.deepsource.io/deepsource-badge-light.svg
+    :target: https://deepsource.io/gh/jkeyes/pathfinder/?ref=repository-badge
+
 
 Examples
 --------

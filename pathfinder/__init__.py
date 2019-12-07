@@ -83,7 +83,7 @@ def pathfind(
     just_files=None,
     regex=None,
     fnmatch=None,
-    filter=None,
+    filter=None,  # skipcq: PYL-W0622
     ignore=None,
     abspath=None,
     depth=None,
@@ -103,7 +103,7 @@ def find(
     just_files=None,
     regex=None,
     fnmatch=None,
-    filter=None,
+    filter=None,  # skipcq: PYL-W0622
     ignore=None,
     abspath=None,
     depth=None,
@@ -133,7 +133,7 @@ def find_paths(
     just_files=None,
     regex=None,
     fnmatch=None,
-    filter=None,
+    filter=None,  # skipcq: PYL-W0622
     ignore=None,
     abspath=None,
     depth=None,

@@ -332,8 +332,8 @@ class FindTest(unittest.TestCase):
 
     def test_image(self):
         """ Find all images. """
-        filter = ImageFilter()
-        paths = walk_and_filter(BASEPATH, filter)
+        image_filter = ImageFilter()
+        paths = walk_and_filter(BASEPATH, image_filter)
         self.assertEqual(6, len(paths))
 
     def test_find_filepath(self):

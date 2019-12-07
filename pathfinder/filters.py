@@ -1,6 +1,4 @@
-"""
-pathfinder - making it easy to find paths
-"""
+"""pathfinder - making it easy to find paths."""
 import fnmatch as fnmatch_module
 import os
 import re
@@ -213,11 +211,14 @@ class GreyscaleImageFilter(ImageFilter):
                 # GIF support
                 return is_greyscale_palette(palette)
 
-            s = ImageStat.Stat(image)
-            # B&W JPEG
+            stat = ImageStat.Stat(image)
+            # B&W JPEG: 8-bit pixels, black and white
             if image.mode == "L":
                 return True
-            return stdv(s.mean[:3]) < 1
+            # if the standard deviation of the mean is less than 1 we say it's a greyscale image
+            # where mean = average (arithmetic mean) pixel level for each band in the image.
+            # note we ignore alpha bands here
+            return stdv(stat.mean[:3]) < 1
         return False
 
 
@@ -234,23 +235,29 @@ class ColorImageFilter(ImageFilter):
                 # GIF SUPPORT
                 return is_color_palette(palette)
 
-            s = ImageStat.Stat(image)
-            # B&W JPEG
+            stat = ImageStat.Stat(image)
+            # B&W JPEG: 8-bit pixels, black and white
             if image.mode == "L":
                 return False
-            return stdv(s.mean[:3]) > 1
+
+            # if the standard deviation of the mean is more than 1 we say it's a color image
+            # where mean = average (arithmetic mean) pixel level for each band in the image.
+            # note we ignore alpha bands here
+            return stdv(stat.mean[:3]) > 1
         return False
 
 
-def stdv(x):
-    n, _sum, mean, std = len(x), sum(x), 0, 0
-    mean = _sum / float(n)
-    sum_diff = sum((a - mean) ** 2 for a in x)
-    std = sqrt(sum_diff / float(n - 1))
+def stdv(band_means):
+    """Calculate the standard deviation of the image bands."""
+    num_bands, _sum, mean, std = len(band_means), sum(band_means), 0, 0
+    mean = _sum / float(num_bands)
+    sum_diff = sum((a - mean) ** 2 for a in band_means)
+    std = sqrt(sum_diff / float(num_bands - 1))
     return std
 
 
 def is_greyscale_palette(palette):
+    """Return whether the palette is greyscale only."""
     for i in range(256):
         j = i * 3
         if palette[j] != palette[j + 1] != palette[j + 2]:
@@ -259,4 +266,5 @@ def is_greyscale_palette(palette):
 
 
 def is_color_palette(palette):
+    """Return whether the palette has color."""
     return not is_greyscale_palette(palette)
