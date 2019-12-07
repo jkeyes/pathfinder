@@ -1,9 +1,5 @@
+# -*- coding: utf-8 -*-
 """pathfinder package."""
-#
-# Copyright 2009 keyes.ie
-#
-# License: http://jkeyes.mit-license.org/
-#
 
 import os
 
@@ -77,56 +73,6 @@ def walk_and_filter_generator(  # noqa:C901
                 yield filepath
 
 
-def pathfind(
-    filepath,
-    just_dirs=None,
-    just_files=None,
-    regex=None,
-    fnmatch=None,
-    filter=None,  # skipcq: PYL-W0622
-    ignore=None,
-    abspath=None,
-    depth=None,
-):
-    """Warn of deprecated function."""
-    import warnings
-
-    warnings.warn("Deprecated. Please use find.", DeprecationWarning)
-    return find(
-        filepath, just_dirs, just_files, regex, fnmatch, filter, ignore, abspath, depth
-    )
-
-
-def find(
-    directory_path,
-    just_dirs=None,
-    just_files=None,
-    regex=None,
-    fnmatch=None,
-    filter=None,  # skipcq: PYL-W0622
-    ignore=None,
-    abspath=None,
-    depth=None,
-):
-    """Find paths in the tree rooted at filepath."""
-    import warnings
-
-    warnings.warn("Deprecated. Please use find_paths.", DeprecationWarning)
-    return list(
-        find_paths(
-            directory_path,
-            just_dirs,
-            just_files,
-            regex,
-            fnmatch,
-            filter,
-            ignore,
-            abspath,
-            depth,
-        )
-    )
-
-
 def find_paths(
     directory_path,
     just_dirs=None,
@@ -152,6 +98,4 @@ def find_paths(
     else:
         path_filter = filter
 
-    return walk_and_filter_generator(
-        directory_path, path_filter, ignore, abspath, depth
-    )
+    return walk_and_filter(directory_path, path_filter, ignore, abspath, depth)

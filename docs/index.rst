@@ -9,11 +9,10 @@
    api
    changelog
 
-==========
 pathfinder
 ==========
 
-pathfinder is `os.walk` for humans.
+pathfinder – a simpler `os.walk`
 
 Installation
 ============
@@ -34,23 +33,23 @@ Basic find
 
 ::
 
-    from pathfinder import find
+    from pathfinder import find_paths
 
     # all files and directories
-    paths = find(".")
+    paths = find_paths(".")
 
     # all files
-    paths = find(".", just_files=True)
+    paths = find_paths(".", just_files=True)
 
     # all directories
-    paths = find(".", just_dirs=True)
+    paths = find_paths(".", just_dirs=True)
 
-By default `find` prepends the path you search for to the results.
+By default `find_paths` prepends the path you search for to the results.
 If you want you can ensure the results only contain absolute paths:
 
 ::
 
-    paths = find(".", abspath=True)
+    paths = find_paths(".", abspath=True)
 
 Filtering the results
 ---------------------
@@ -64,7 +63,7 @@ the `Unix shell-style pattern <http://docs.python.org/library/fnmatch.html>`_ ap
 ::
 
     # all PDF files
-    paths = find(".", fnmatch="*.pdf")
+    paths = find_paths(".", fnmatch="*.pdf")
 
 fnmatching provides some power, but for more flexibility lets
 have a look at the regular expression support:
@@ -72,10 +71,10 @@ have a look at the regular expression support:
 ::
 
     # all PDF files
-    paths = find(".", regex=".*\.pdf")
+    paths = find_paths(".", regex=".*\.pdf")
 
     # all PDF files with four letter base names
-    paths = find(pwd, regex=".*/.{4}\.pdf")
+    paths = find_paths(pwd, regex=".*/.{4}\.pdf")
 
 pathfinder provides the ability to ignore certain paths too:
 
@@ -85,11 +84,11 @@ pathfinder provides the ability to ignore certain paths too:
     # from the files with three character extensions
     from pathfinder import FnmatchFilter
     ignore = FnmatchFilter("*.pdf")
-    find(".", regex=".*/.*\..{3}$", ignore=ignore)
+    find_paths(".", regex=".*/.*\..{3}$", ignore=ignore)
 
     # ignore all files and directories that begin with .
     ignore = RegexFilter("\..*")    
-    find(".", ignore=ignore)
+    find_paths(".", ignore=ignore)
 
 Controlling the depth of the search
 -----------------------------------
@@ -99,7 +98,7 @@ You may want to limit how to deep to search into a directory tree:
 ::
 
     # only search down two levels
-    find(".", depth=2)
+    find_paths(".", depth=2)
 
 Extra support for images
 ------------------------
@@ -110,7 +109,7 @@ Let's find some images in the directory:
 
     # all of the images
     from pathfinder import ImageFilter
-    find(".", filter=ImageFilter())
+    find_paths(".", filter=ImageFilter())
 
 That is just a shortcut for matching multiple file extensions, 
 but we can also filter the results based on the dimensions of the 
@@ -120,11 +119,11 @@ image:
 
     # only images less than 20 pixels tall
     from pathfinder import ImageDimensionFilter
-    find(".", filter=ImageDimensionFilter(max_height=20))
+    find_paths(".", filter=ImageDimensionFilter(max_height=20))
 
     # only images less than 10 pixels tall and wide
     from pathfinder import ImageDimensionFilter
-    find(".", filter=ImageDimensionFilter(max_height=10, min_height=10))
+    find_paths(".", filter=ImageDimensionFilter(max_height=10, min_height=10))
 
 And we can also search for images based on their color paletter:
 
@@ -132,11 +131,11 @@ And we can also search for images based on their color paletter:
 
     # only color images
     from pathfinder import ColorImageFilter
-    find(".", filter=ColorImageFilter())
+    find_paths(".", filter=ColorImageFilter())
 
     # only greyscale images
     from pathfinder import GreyscaleImageFilter
-    find(".", filter=GreyscaleImageFilter())
+    find_paths(".", filter=GreyscaleImageFilter())
 
 Combining filters
 -----------------
@@ -152,13 +151,13 @@ functions.
     from pathfinder import SizeFilter
     color = ColorImageFilter()
     size = SizeFilter(max_bytes=400)
-    find(".", filter=color & size)
+    find_paths(".", filter=color & size)
 
     # pdf OR txt files
     from pathfinder import FnmatchFilter
     txt = FnmatchFilter("*.txt")
     pdf = FnmatchFilter("*.pdf")
-    find(".", filter=txt | pdf)
+    find_paths(".", filter=txt | pdf)
 
     # txt files, but NOT ones begining with a
     from pathfinder import NotFilter
@@ -166,7 +165,7 @@ functions.
     from pathfinder import FnmatchFilter
     txt = FnmatchFilter("*.txt")
     afiles = NotFilter(FnmatchFilter("*/a*"))
-    find(".", filter=txt & afiles)
+    find_paths(".", filter=txt & afiles)
 
 find shortcut
 -------------

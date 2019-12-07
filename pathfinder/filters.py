@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """pathfinder - making it easy to find paths."""
 import fnmatch as fnmatch_module
 import os
