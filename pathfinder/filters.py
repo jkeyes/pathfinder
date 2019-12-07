@@ -7,7 +7,7 @@ import re
 from math import sqrt
 
 
-class Filter:
+class Filter(object):
     def __and__(self, other):
         return AndFilter(self, other)
 
