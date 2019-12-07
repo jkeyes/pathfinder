@@ -1,0 +1,22 @@
+version = 1
+
+test_patterns = [
+  'tests/*'
+]
+
+exclude_patterns = [
+  "docs/conf.py",
+  "example.py"
+]
+
+[[analyzers]]
+name = 'python'
+enabled = true
+runtime_version = '3.x.x'
+dependency_file_paths = [
+  "requirements.txt",
+  "dev-requirements.txt"
+]
+
+  [analyzers.meta]
+  max_line_length = 100

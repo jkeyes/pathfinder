@@ -7,20 +7,21 @@
 from setuptools import find_packages
 from setuptools import setup
 
-setup(name='pathfinder',
-    description='Pathfinder os.walk for humans',
-    long_description=open('README.rst').read(),
-    url='http://jkeyes.github.com/pathfinder/',
-    author='John Keyes',
-    author_email='john@keyes.ie',
-    version='0.5.3',
-    license='MIT License',
-    classifiers = [
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
+setup(
+    name="pathfinder",
+    description="Pathfinder os.walk for humans",
+    long_description=open("README.rst").read(),
+    url="http://jkeyes.github.com/pathfinder/",
+    author="John Keyes",
+    author_email="john@keyes.ie",
+    version="0.5.4",
+    license="MIT License",
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: BSD License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
     ],
-    packages=find_packages()
+    packages=find_packages(),
 )

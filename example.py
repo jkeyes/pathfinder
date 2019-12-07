@@ -7,7 +7,7 @@ paths = find(".", just_dirs=True)
 paths = find(".", just_files=True)
 
 # get all jpg files using a regex
-paths = find(".", regex=".*\.jpg$")
+paths = find(".", regex=r".*\.jpg$")
 
 # get all jpg files using posix wildcards
 paths = find(".", fnmatch="*.jpg")
@@ -15,6 +15,7 @@ paths = find(".", fnmatch="*.jpg")
 # get all jpg files and png files
 from pathfinder import FnmatchFilter
 from pathfinder import OrFilter
+
 jpg_filter = FnmatchFilter("*.jpg")
 png_filter = FnmatchFilter("*.png")
 gif_filter = FnmatchFilter("*.gif")
@@ -26,6 +27,7 @@ paths = find(".", filter=jpg_filter | png_filter | gif_filter)
 
 # even shorter using ImageFilter to find all images
 from pathfinder import ImageFilter
+
 paths = find(".", filter=ImageFilter())
 
 # and an even shorter way
