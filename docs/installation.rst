@@ -11,7 +11,9 @@ The simplest way to install pathfinder is with `pip <http://pip.openplans.org>`_
 Dependencies
 ============
 
-pathfinder has no external runtime dependencies.
+pathfinder has no required external runtime dependencies.
+
+However, image filtering requires `Pillow <https://pillow.readthedocs.io/en/stable/>`.
 
 Development Dependencies
 ========================

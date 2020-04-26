@@ -6,6 +6,7 @@
 .. toctree::
    :hidden:
 
+   installation
    api
    changelog
 
@@ -22,7 +23,7 @@ Stable releases of pathfinder can be installed with
 archive from `pypi <http://pypi.python.org/pypi/pathfinder#downloads>`_.
 See the :doc:`installation` page for more detailed instructions.
 
-If you want to use the latest code, you can grab it from our 
+If you want to use the latest code, you can grab it from the
 `Git repository <http://github.com/jkeyes/pathfinder>`_, or `fork it <http://github.com/jkeyes/pathfinder>`_.
 
 Usage
