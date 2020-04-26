@@ -419,3 +419,11 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir2", "file7.html") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3", "file8") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3", ".file9") in paths)
+
+    def test_path_does_not_exist(self):
+        """Test when the parameter is a non-existent path."""
+        # only find directories
+        with self.assertRaises(EnvironmentError):
+            find_paths(
+                os.path.join(os.path.dirname(BASEPATH), "doesnotexist"), just_dirs=True
+            )

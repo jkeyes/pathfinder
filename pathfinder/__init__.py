@@ -8,6 +8,8 @@ from pathfinder import filters
 
 def walk_and_filter(filepath, pathfilter, ignore=None, abspath=None, depth=None):
     """Walk the file tree and filter it's contents."""
+    if not os.path.exists(filepath):
+        raise EnvironmentError(filepath)
     return list(walk_and_filter_generator(filepath, pathfilter, ignore, abspath, depth))
 
 
