@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.6.2
++++++
+* raise an exception of the filepath parameter does not exist
+* upgrade the version of Pillow
+
 0.6.1
 +++++
 * fixed example in README.rst

@@ -10,7 +10,7 @@ setup(
     url="http://jkeyes.github.com/pathfinder/",
     author="John Keyes",
     author_email="john@keyes.ie",
-    version="0.6.1",
+    version="0.6.2",
     license="MIT License",
     classifiers=[
         "Development Status :: 4 - Beta",
