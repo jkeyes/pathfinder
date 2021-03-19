@@ -13,7 +13,7 @@ Dependencies
 
 pathfinder has no required external runtime dependencies.
 
-However, image filtering requires `Pillow <https://pillow.readthedocs.io/en/stable/>`.
+However, image filtering requires `Pillow <https://pillow.readthedocs.io/en/stable/>_`.
 
 Development Dependencies
 ========================

@@ -83,7 +83,7 @@ pathfinder provides the ability to ignore certain paths too:
 
     # create your ignore filter to ignore all PDF files
     # from the files with three character extensions
-    from pathfinder import FnmatchFilter
+    from pathfinder.filters import FnmatchFilter
     ignore = FnmatchFilter("*.pdf")
     find_paths(".", regex=".*/.*\..{3}$", ignore=ignore)
 
@@ -109,7 +109,7 @@ Let's find some images in the directory:
 ::
 
     # all of the images
-    from pathfinder import ImageFilter
+    from pathfinder.filters import ImageFilter
     find_paths(".", filter=ImageFilter())
 
 That is just a shortcut for matching multiple file extensions, 
@@ -119,11 +119,11 @@ image:
 ::
 
     # only images less than 20 pixels tall
-    from pathfinder import ImageDimensionFilter
+    from pathfinder.filters import ImageDimensionFilter
     find_paths(".", filter=ImageDimensionFilter(max_height=20))
 
     # only images less than 10 pixels tall and wide
-    from pathfinder import ImageDimensionFilter
+    from pathfinder.filters import ImageDimensionFilter
     find_paths(".", filter=ImageDimensionFilter(max_height=10, min_height=10))
 
 And we can also search for images based on their color paletter:
@@ -131,11 +131,11 @@ And we can also search for images based on their color paletter:
 ::
 
     # only color images
-    from pathfinder import ColorImageFilter
+    from pathfinder.filters import ColorImageFilter
     find_paths(".", filter=ColorImageFilter())
 
     # only greyscale images
-    from pathfinder import GreyscaleImageFilter
+    from pathfinder.filters import GreyscaleImageFilter
     find_paths(".", filter=GreyscaleImageFilter())
 
 Combining filters
@@ -148,22 +148,22 @@ functions.
 ::
 
     # color images AND greater than 400 bytes
-    from pathfinder import ColorImageFilter
-    from pathfinder import SizeFilter
+    from pathfinder.filters import ColorImageFilter
+    from pathfinder.filters import SizeFilter
     color = ColorImageFilter()
     size = SizeFilter(max_bytes=400)
     find_paths(".", filter=color & size)
 
     # pdf OR txt files
-    from pathfinder import FnmatchFilter
+    from pathfinder.filters import FnmatchFilter
     txt = FnmatchFilter("*.txt")
     pdf = FnmatchFilter("*.pdf")
     find_paths(".", filter=txt | pdf)
 
     # txt files, but NOT ones begining with a
-    from pathfinder import NotFilter
-    from pathfinder import SizeFilter
-    from pathfinder import FnmatchFilter
+    from pathfinder.filters import NotFilter
+    from pathfinder.filters import SizeFilter
+    from pathfinder.filters import FnmatchFilter
     txt = FnmatchFilter("*.txt")
     afiles = NotFilter(FnmatchFilter("*/a*"))
     find_paths(".", filter=txt & afiles)
@@ -175,7 +175,7 @@ You can also run a find directly from a filter:
 
 ::
 
-    from pathfinder import SizeFilter
+    from pathfinder.filters import SizeFilter
     SizeFilter(max_bytes=1024).find(".")
 
 Changelog
