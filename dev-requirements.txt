@@ -1,5 +1,5 @@
 # for image filters
-Pillow==7.1.2
+Pillow==9.3.0
 
 # dev tools
 black==19.10b0
