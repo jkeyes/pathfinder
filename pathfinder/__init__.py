@@ -40,7 +40,6 @@ def walk_and_filter_generator(  # noqa:C901
         base_path = os.path.normpath(os.path.dirname(filepath))
 
     for root, dirs, files in os.walk(base_path):
-
         # descend the tree to a certain depth
         level = len(root.split(base_path)[1].split(os.sep))
         if level > depth and depth != -1:
