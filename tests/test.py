@@ -116,7 +116,7 @@ class FindTest(unittest.TestCase):
 
         # find only files and directories with 1 anywhere in the path
         paths = find_paths(BASEPATH, regex=".*1.*")
-        self.assertTrue(7, len(paths))
+        self.assertEqual(7, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "dir1") in paths)
         self.assertTrue(os.path.join(BASEPATH, "file1.txt") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir1", "subdirectory") in paths)
