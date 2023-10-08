@@ -25,7 +25,7 @@ BASEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 class FindTest(unittest.TestCase):
     def test_just_dirs(self):
-        """ Test just_dirs parameter."""
+        """Test just_dirs parameter."""
         # only find directories
         paths = find_paths(BASEPATH, just_dirs=True)
         self.assertEqual(5, len(paths))
@@ -40,7 +40,7 @@ class FindTest(unittest.TestCase):
         self.assertEqual(paths, paths_2)
 
     def test_just_files(self):
-        """ Test just_files parameter."""
+        """Test just_files parameter."""
         # only find files
         paths = find_paths(BASEPATH, just_files=True)
         self.assertEqual(17, len(paths))
@@ -69,7 +69,7 @@ class FindTest(unittest.TestCase):
         self.assertEqual(paths, paths_2)
 
     def test_regex(self):
-        """ Test regex parameter."""
+        """Test regex parameter."""
         # find all files and directories
         paths = find_paths(BASEPATH, regex=".*")
         self.assertEqual(22, len(paths))
@@ -128,7 +128,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, ".dir4", "file10") in paths)
 
     def test_fnmatch(self):
-        """ Test fnmatch parameter."""
+        """Test fnmatch parameter."""
         # find all files and directories
         paths = find_paths(BASEPATH, fnmatch="*")
         self.assertEqual(22, len(paths))
@@ -168,7 +168,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir1", "file4.txt") in paths)
 
     def test_all(self):
-        """ Test with no parameters. """
+        """Test with no parameters. """
         # find all paths
         paths = find_paths(BASEPATH)
         self.assertEqual(22, len(paths))
@@ -197,7 +197,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir3", ".file9") in paths)
 
     def test_and(self):
-        """ Test AndFilter."""
+        """Test AndFilter."""
         # find directories with a 2 anywhere in the path
         filt = AndFilter(DirectoryFilter(), RegexFilter(".*2.*"))
         paths = find_paths(BASEPATH, filter=filt)
@@ -214,7 +214,7 @@ class FindTest(unittest.TestCase):
         self.assertEqual(paths, paths_3)
 
     def test_or(self):
-        """ Test OrFilter."""
+        """Test OrFilter."""
         # find all directories and any files (or directories)
         # with 2 in the path
         filt = OrFilter(DirectoryFilter(), RegexFilter(".*2.*"))
@@ -239,7 +239,7 @@ class FindTest(unittest.TestCase):
         self.assertEqual(paths, paths_3)
 
     def test_not(self):
-        """ Test NotFilter."""
+        """Test NotFilter."""
         # find all files and directories with a .txt extension
         # except ones that end in 3.txt
         filt = AndFilter(NotFilter(FnmatchFilter("*3.txt")), FnmatchFilter("*.txt"))
@@ -252,7 +252,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir1", "file4.txt") in paths)
 
     def test_ignore(self):
-        """ Test ignore parameter."""
+        """Test ignore parameter."""
         # find all directories and all files and directories
         # with a 2 in the path and no directories that begin
         # with a dot
@@ -280,7 +280,7 @@ class FindTest(unittest.TestCase):
         self.assertFalse("4.txt" in " ".join(ignore_paths))
 
     def test_abspath(self):
-        """ Make sure all paths are absolute paths."""
+        """Make sure all paths are absolute paths."""
         cwd = os.getcwd()
         paths = find_paths(BASEPATH, filter=DirectoryFilter(), abspath=True)
         self.assertEqual(5, len(paths))
@@ -295,7 +295,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(cwd, BASEPATH, "python_logo.png") in paths)
 
     def test_depth(self):
-        """ Only descend a certain depth into a tree."""
+        """Only descend a certain depth into a tree."""
         paths = find_paths(BASEPATH, filter=DirectoryFilter(), depth=1)
         self.assertEqual(4, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "dir1") in paths)
@@ -308,7 +308,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir1", "subdirectory") in paths)
 
     def test_size(self):
-        """ Find files based on size criteria. """
+        """Find files based on size criteria. """
         # all files except the image files are less than 10 bytes
         p_filter = SizeFilter(max_bytes=0)
         paths = walk_and_filter(BASEPATH, p_filter)
@@ -325,13 +325,13 @@ class FindTest(unittest.TestCase):
         self.assertEqual(3, len(paths))
 
     def test_image(self):
-        """ Find all images. """
+        """Find all images. """
         image_filter = ImageFilter()
         paths = walk_and_filter(BASEPATH, image_filter)
         self.assertEqual(6, len(paths))
 
     def test_find_filepath(self):
-        """ Test when the root path to a find is a file and not a directory. """
+        """Test when the root path to a find is a file and not a directory. """
         a_paths = find_paths(os.path.join(BASEPATH, "python_logo.png"), just_files=True)
         b_paths = find_paths(BASEPATH, just_files=True)
         self.assertEqual(a_paths, b_paths)
@@ -340,7 +340,7 @@ class FindTest(unittest.TestCase):
         import PIL
 
         def test_image_dimension(self):
-            """ Find images based on dimensions. """
+            """Find images based on dimensions. """
             p_filter = ImageDimensionFilter(
                 max_width=1000, max_height=1000, min_height=20, min_width=20
             )
@@ -375,13 +375,13 @@ class FindTest(unittest.TestCase):
             self.assertEqual(6, len(paths))
 
         def test_bw_image(self):
-            """ Find all grey scale images. """
+            """Find all grey scale images. """
             p_filter = GreyscaleImageFilter()
             paths = walk_and_filter(BASEPATH, p_filter)
             self.assertEqual(4, len(paths))
 
         def test_color_image(self):
-            """ Find all color images. """
+            """Find all color images. """
             p_filter = ColorImageFilter()
             paths = walk_and_filter(BASEPATH, p_filter)
             self.assertEqual(2, len(paths))
@@ -390,7 +390,7 @@ class FindTest(unittest.TestCase):
         pass
 
     def test_generator(self):
-        """ Test with no parameters. """
+        """Test with no parameters. """
         # find all paths
         paths = []
         for path in find_paths(BASEPATH):
