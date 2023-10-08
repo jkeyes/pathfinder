@@ -221,8 +221,7 @@ class GreyscaleImageFilter(ImageFilter):
     def accepts(self, filepath):
         """Return true if the file located at filepath is a greyscale image."""
         if super(GreyscaleImageFilter, self).accepts(filepath):
-            from PIL import Image
-            from PIL import ImageStat
+            from PIL import Image, ImageStat
 
             image = Image.open(filepath)
             palette = image.getpalette()
@@ -248,8 +247,7 @@ class ColorImageFilter(ImageFilter):
     def accepts(self, filepath):
         """Return True if the file at filepath is a colour image."""
         if super(ColorImageFilter, self).accepts(filepath):
-            from PIL import Image
-            from PIL import ImageStat
+            from PIL import Image, ImageStat
 
             image = Image.open(filepath)
             palette = image.getpalette()

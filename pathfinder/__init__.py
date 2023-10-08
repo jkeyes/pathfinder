@@ -86,7 +86,7 @@ def _assert_file(pathfilter, filepath, abspath):
 def _get_base_path(filepath):
     """
     Return the directory for filepath.
-    
+
     If filepath is a directory return that path.
     """
     return (
