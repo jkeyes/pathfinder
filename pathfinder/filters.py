@@ -138,12 +138,16 @@ class SizeFilter(FileFilter):
         """Return True if the file size is within the range."""
         if super(SizeFilter, self).accepts(filepath):
             stat = os.stat(filepath)
-            if self.max_bytes is not None and stat.st_size > self.max_bytes:
-                return False
-            elif self.min_bytes is not None and stat.st_size < self.min_bytes:
-                return False
-            return True
+            return self._has_gtr_min_bytes(stat) and self._has_lte_max_bytes(stat)
         return False
+
+    def _has_lte_max_bytes(self, stat):
+        """Return whether the file size is less than or equal to the max size."""
+        return self.max_bytes is None or stat.st_size <= self.max_bytes
+
+    def _has_gtr_min_bytes(self, stat):
+        """Return whether the file size is greater than or equal to the min size."""
+        return self.min_bytes is None or stat.st_size >= self.min_bytes
 
 
 class ImageFilter(Filter):
