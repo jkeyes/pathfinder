@@ -7,6 +7,8 @@ from math import sqrt
 
 
 class Filter:
+    """Base filter class."""
+
     def __and__(self, other):
         return AndFilter(self, other)
 
@@ -120,6 +122,8 @@ class DotDirectoryFilter(AndFilter):
 
 
 class SizeFilter(FileFilter):
+    """Accepts files within a min and/or max bytes range."""
+
     def __init__(self, max_bytes=None, min_bytes=None):
         self.file_filter = FileFilter()
         self.max_bytes = max_bytes
@@ -198,6 +202,8 @@ class ImageDimensionFilter(ImageFilter):
 
 
 class GreyscaleImageFilter(ImageFilter):
+    """Accepts black and white images."""
+
     def accepts(self, filepath):
         if super(GreyscaleImageFilter, self).accepts(filepath):
             from PIL import Image
@@ -222,6 +228,8 @@ class GreyscaleImageFilter(ImageFilter):
 
 
 class ColorImageFilter(ImageFilter):
+    """Accepts colour images."""
+
     def accepts(self, filepath):
         if super(ColorImageFilter, self).accepts(filepath):
             from PIL import Image
