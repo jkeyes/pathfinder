@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+"""pathfinder tests module."""
+
 import os
 import unittest
 
