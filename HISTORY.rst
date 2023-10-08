@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.1
++++++
+* new version for read the docs configuration
+
 1.0.0
 +++++
 * replace nosetests with pytests
