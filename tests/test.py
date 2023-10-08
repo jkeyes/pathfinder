@@ -46,7 +46,7 @@ class FindTest(unittest.TestCase):
         """Test just_files parameter."""
         # only find files
         paths = find_paths(BASEPATH, just_files=True)
-        self.assertEqual(17, len(paths))
+        self.assertEqual(18, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "file1.txt") in paths)
         self.assertTrue(os.path.join(BASEPATH, "file2.dat") in paths)
         self.assertTrue(os.path.join(BASEPATH, "file3.txt") in paths)
@@ -66,6 +66,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir3", "file8") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3", ".file9") in paths)
         self.assertTrue(os.path.join(BASEPATH, ".dir4", "file10") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") in paths)
 
         # use Filter.find
         paths_2 = FileFilter().find(BASEPATH)
@@ -75,7 +76,7 @@ class FindTest(unittest.TestCase):
         """Test regex parameter."""
         # find all files and directories
         paths = find_paths(BASEPATH, regex=".*")
-        self.assertEqual(22, len(paths))
+        self.assertEqual(23, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "dir1") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir1", "subdirectory") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2") in paths)
@@ -100,6 +101,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir3", "file8") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3", ".file9") in paths)
         self.assertTrue(os.path.join(BASEPATH, ".dir4", "file10") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") in paths)
 
         # use Filter.find
         paths_2 = RegexFilter(".*").find(BASEPATH)
@@ -107,7 +109,7 @@ class FindTest(unittest.TestCase):
 
         # find only files and directories with a t in the extension
         paths = find_paths(BASEPATH, regex=r".*\..*t.*$")
-        self.assertEqual(6, len(paths))
+        self.assertEqual(7, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "file1.txt") in paths)
         self.assertTrue(os.path.join(BASEPATH, "file2.dat") in paths)
         self.assertTrue(os.path.join(BASEPATH, "file3.txt") in paths)
@@ -116,6 +118,7 @@ class FindTest(unittest.TestCase):
         )
         self.assertTrue(os.path.join(BASEPATH, "dir1", "file4.txt") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2", "file7.html") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") in paths)
 
         # find only files and directories with 1 anywhere in the path
         paths = find_paths(BASEPATH, regex=".*1.*")
@@ -134,7 +137,7 @@ class FindTest(unittest.TestCase):
         """Test fnmatch parameter."""
         # find all files and directories
         paths = find_paths(BASEPATH, fnmatch="*")
-        self.assertEqual(22, len(paths))
+        self.assertEqual(23, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "dir1") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir1", "subdirectory") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2") in paths)
@@ -159,22 +162,24 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir3", "file8") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3", ".file9") in paths)
         self.assertTrue(os.path.join(BASEPATH, ".dir4", "file10") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") in paths)
 
         # find only files or directories with a .txt extension
         paths = find_paths(BASEPATH, fnmatch="*.txt")
-        self.assertEqual(4, len(paths))
+        self.assertEqual(5, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "file1.txt") in paths)
         self.assertTrue(os.path.join(BASEPATH, "file3.txt") in paths)
         self.assertTrue(
             os.path.join(BASEPATH, "dir1", "subdirectory", "sub.txt") in paths
         )
         self.assertTrue(os.path.join(BASEPATH, "dir1", "file4.txt") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") in paths)
 
     def test_all(self):
         """Test with no parameters."""
         # find all paths
         paths = find_paths(BASEPATH)
-        self.assertEqual(22, len(paths))
+        self.assertEqual(23, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "dir1") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir1", "subdirectory") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2") in paths)
@@ -198,6 +203,8 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir2", "file7.html") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3", "file8") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3", ".file9") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file10") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") in paths)
 
     def test_and(self):
         """Test AndFilter."""
@@ -222,12 +229,13 @@ class FindTest(unittest.TestCase):
         # with 2 in the path
         filt = OrFilter(DirectoryFilter(), RegexFilter(".*2.*"))
         paths = find_paths(BASEPATH, filter=filt)
-        self.assertEqual(8, len(paths))
+        self.assertEqual(9, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "dir1") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir1", "subdirectory") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3") in paths)
         self.assertTrue(os.path.join(BASEPATH, ".dir4") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") in paths)
         self.assertTrue(os.path.join(BASEPATH, "file2.dat") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2", "file6.log") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2", "file7.html") in paths)
@@ -247,12 +255,13 @@ class FindTest(unittest.TestCase):
         # except ones that end in 3.txt
         filt = AndFilter(NotFilter(FnmatchFilter("*3.txt")), FnmatchFilter("*.txt"))
         paths = find_paths(BASEPATH, filter=filt)
-        self.assertEqual(3, len(paths))
+        self.assertEqual(4, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "file1.txt") in paths)
         self.assertTrue(
             os.path.join(BASEPATH, "dir1", "subdirectory", "sub.txt") in paths
         )
         self.assertTrue(os.path.join(BASEPATH, "dir1", "file4.txt") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") in paths)
 
     def test_ignore(self):
         """Test ignore parameter."""
@@ -270,16 +279,19 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "file2.dat") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2", "file6.log") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2", "file7.html") in paths)
+        # verify the files n the .dir4 directory is not found
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file10") not in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") not in paths)
 
         filt = FnmatchFilter("*.txt")
         ignore = FnmatchFilter("*4.txt")
 
         all_paths = find_paths(BASEPATH, filter=filt)
-        self.assertEqual(4, len(all_paths))
+        self.assertEqual(5, len(all_paths))
         self.assertTrue("4.txt" in " ".join(all_paths))
 
         ignore_paths = find_paths(BASEPATH, filter=filt, ignore=ignore)
-        self.assertEqual(3, len(ignore_paths))
+        self.assertEqual(4, len(ignore_paths))
         self.assertFalse("4.txt" in " ".join(ignore_paths))
 
     def test_abspath(self):
@@ -294,7 +306,7 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(cwd, BASEPATH, ".dir4") in paths)
 
         paths = find_paths(BASEPATH, just_files=True, abspath=True)
-        self.assertEqual(17, len(paths))
+        self.assertEqual(18, len(paths))
         self.assertTrue(os.path.join(cwd, BASEPATH, "python_logo.png") in paths)
 
     def test_depth(self):
@@ -315,7 +327,7 @@ class FindTest(unittest.TestCase):
         # all files except the image files are less than 10 bytes
         p_filter = SizeFilter(max_bytes=0)
         paths = walk_and_filter(BASEPATH, p_filter)
-        self.assertEqual(11, len(paths))
+        self.assertEqual(12, len(paths))
 
         # only the image files contain data
         p_filter = SizeFilter(min_bytes=1)
@@ -398,7 +410,7 @@ class FindTest(unittest.TestCase):
         paths = []
         for path in find_paths(BASEPATH):
             paths.append(path)
-        self.assertEqual(22, len(paths))
+        self.assertEqual(23, len(paths))
         self.assertTrue(os.path.join(BASEPATH, "dir1") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir1", "subdirectory") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir2") in paths)
@@ -422,6 +434,8 @@ class FindTest(unittest.TestCase):
         self.assertTrue(os.path.join(BASEPATH, "dir2", "file7.html") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3", "file8") in paths)
         self.assertTrue(os.path.join(BASEPATH, "dir3", ".file9") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file10") in paths)
+        self.assertTrue(os.path.join(BASEPATH, ".dir4", "file20.txt") in paths)
 
     def test_path_does_not_exist(self):
         """Test when the parameter is a non-existent path."""
