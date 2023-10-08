@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.0
++++++
+* replace nosetests with pytests
+* drop Python 2 support
+
 0.6.2
 +++++
 * raise an exception of the filepath parameter does not exist
