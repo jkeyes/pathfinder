@@ -8,5 +8,6 @@ venv*
 MANIFEST
 docs/_build
 
+.python-version
 pathfinder.sublime-project
 pathfinder.sublime-workspace

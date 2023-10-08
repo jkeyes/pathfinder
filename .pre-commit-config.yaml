@@ -1,0 +1,27 @@
+fail_fast: true
+
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 23.9.1
+    hooks:
+      - id: black
+        args: [--diff, --check]
+
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        entry: flake8
+        language: system
+        # types: [python]
+        # require_serial: true
+
+  - repo: local
+    hooks:
+    -   id: isort
+        name: isort
+        entry: isort
+        language: system
+        args: [-c, --profile, black]
+        # types: [python]
+        # require_serial: true

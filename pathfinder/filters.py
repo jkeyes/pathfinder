@@ -7,13 +7,18 @@ from math import sqrt
 
 
 class Filter:
+    """Base filter class."""
+
     def __and__(self, other):
+        """Override dunder and."""
         return AndFilter(self, other)
 
     def __or__(self, other):
+        """Override dunder or."""
         return OrFilter(self, other)
 
     def find(self, filepath):
+        """Walk the directory and try to find the filepath."""
         from pathfinder import walk_and_filter
 
         return walk_and_filter(filepath, self)
@@ -23,7 +28,7 @@ class AlwaysAcceptFilter(Filter):
     """Accept every path."""
 
     def accepts(self, _):
-        """Always returns True."""
+        """Return True always."""
         return True
 
 
@@ -31,7 +36,7 @@ class DirectoryFilter(Filter):
     """Accept directory paths."""
 
     def accepts(self, filepath):
-        """Returns True if filepath represents a directory."""
+        """Return True if filepath represents a directory."""
         return os.path.isdir(filepath)
 
 
@@ -39,7 +44,7 @@ class FileFilter(Filter):
     """Accept file paths."""
 
     def accepts(self, filepath):
-        """Returns True if filepath represents a file."""
+        """Return True if filepath represents a file."""
         return os.path.isfile(filepath)
 
 
@@ -52,7 +57,7 @@ class RegexFilter(Filter):
         self.regex = re.compile(regex)
 
     def accepts(self, filepath):
-        """Returns True if the regular expression matches the filepath."""
+        """Return True if the regular expression matches the filepath."""
         return self.regex.match(filepath) is not None
 
 
@@ -65,7 +70,7 @@ class FnmatchFilter(Filter):
         self.pattern = pattern
 
     def accepts(self, filepath):
-        """Returns True if the fnmatch pattern matches the filepath."""
+        """Return True if the fnmatch pattern matches the filepath."""
         return fnmatch_module.fnmatch(filepath, self.pattern)
 
 
@@ -77,7 +82,7 @@ class AndFilter(Filter, list):
         list.__init__(self, args)
 
     def accepts(self, filepath):
-        """Returns True if all of the filters in this filter return True."""
+        """Return True if all of the filters in this filter return True."""
         return all(sub_filter.accepts(filepath) for sub_filter in self)
 
 
@@ -89,7 +94,7 @@ class OrFilter(Filter, list):
         list.__init__(self, args)
 
     def accepts(self, filepath):
-        """Returns True if any of the filters in this filter return True."""
+        """Return True if any of the filters in this filter return True."""
         return any(sub_filter.accepts(filepath) for sub_filter in self)
 
 
@@ -102,7 +107,7 @@ class NotFilter(Filter):
         self.pathfilter = pathfilter
 
     def accepts(self, filepath):
-        """Returns True of the sub-filter returns False."""
+        """Return True of the sub-filter returns False."""
         return not self.pathfilter.accepts(filepath)
 
 
@@ -111,8 +116,9 @@ class DotDirectoryFilter(AndFilter):
 
     def __init__(self):
         """
-        Initialise the filter to ignore directories beginning with
-        a period.
+        Initialise the filter.
+
+        Ignore directories beginning with a period.
         """
         super(DotDirectoryFilter, self).__init__(
             DirectoryFilter(), RegexFilter(rf".*{os.sep}*\..*$")
@@ -120,26 +126,35 @@ class DotDirectoryFilter(AndFilter):
 
 
 class SizeFilter(FileFilter):
+    """Accept files within a min and/or max bytes range."""
+
     def __init__(self, max_bytes=None, min_bytes=None):
+        """Initialise the size filter."""
         self.file_filter = FileFilter()
         self.max_bytes = max_bytes
         self.min_bytes = min_bytes
 
     def accepts(self, filepath):
+        """Return True if the file size is within the range."""
         if super(SizeFilter, self).accepts(filepath):
             stat = os.stat(filepath)
-            if self.max_bytes is not None and stat.st_size > self.max_bytes:
-                return False
-            elif self.min_bytes is not None and stat.st_size < self.min_bytes:
-                return False
-            return True
+            return self._has_gtr_min_bytes(stat) and self._has_lte_max_bytes(stat)
         return False
+
+    def _has_lte_max_bytes(self, stat):
+        """Return whether the file size is less than or equal to the max size."""
+        return self.max_bytes is None or stat.st_size <= self.max_bytes
+
+    def _has_gtr_min_bytes(self, stat):
+        """Return whether the file size is greater than or equal to the min size."""
+        return self.min_bytes is None or stat.st_size >= self.min_bytes
 
 
 class ImageFilter(Filter):
     """Accept paths for Image files."""
 
     def __init__(self):
+        """Initialise the image filter."""
         self.file_filter = OrFilter(
             FnmatchFilter("*.jpg"),
             FnmatchFilter("*.jpeg"),
@@ -150,6 +165,7 @@ class ImageFilter(Filter):
         )
 
     def accepts(self, filepath):
+        """Return true if filepath has an image extension."""
         return self.file_filter.accepts(filepath)
 
 
@@ -159,6 +175,7 @@ class ImageDimensionFilter(ImageFilter):
     def __init__(
         self, max_width=None, max_height=None, min_width=None, min_height=None
     ):
+        """Initialise the image dimension filter."""
         super(ImageDimensionFilter, self).__init__()
 
         if min_height is None:
@@ -172,6 +189,7 @@ class ImageDimensionFilter(ImageFilter):
         self.min_height = min_height
 
     def accepts(self, filepath):
+        """Return True if filepath satisfies the image constraints."""
         if super(ImageDimensionFilter, self).accepts(filepath):
             if (
                 self.min_height == 0
@@ -198,10 +216,12 @@ class ImageDimensionFilter(ImageFilter):
 
 
 class GreyscaleImageFilter(ImageFilter):
+    """Accept black and white images."""
+
     def accepts(self, filepath):
+        """Return true if the file located at filepath is a greyscale image."""
         if super(GreyscaleImageFilter, self).accepts(filepath):
-            from PIL import Image
-            from PIL import ImageStat
+            from PIL import Image, ImageStat
 
             image = Image.open(filepath)
             palette = image.getpalette()
@@ -222,10 +242,12 @@ class GreyscaleImageFilter(ImageFilter):
 
 
 class ColorImageFilter(ImageFilter):
+    """Accept colour images."""
+
     def accepts(self, filepath):
+        """Return True if the file at filepath is a colour image."""
         if super(ColorImageFilter, self).accepts(filepath):
-            from PIL import Image
-            from PIL import ImageStat
+            from PIL import Image, ImageStat
 
             image = Image.open(filepath)
             palette = image.getpalette()
